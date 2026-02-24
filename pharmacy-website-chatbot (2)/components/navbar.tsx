@@ -75,7 +75,7 @@ export function Navbar() {
             <div className="h-10 w-10 rounded-lg bg-primary/10 flex items-center justify-center">
               <Shield className="h-6 w-6 text-primary" />
             </div>
-            <span className="hidden sm:inline">ArmaLegal</span>
+            <span className="hidden sm:inline">PSILVAMEDIC</span>
           </Link>
 
           {/* Desktop Navigation */}

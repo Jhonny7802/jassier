@@ -21,7 +21,7 @@ export function Chatbot() {
   const [messages, setMessages] = useState<Message[]>([
     {
       id: '1',
-      text: 'Hola! Soy el asistente virtual de ArmaLegal. Puedo ayudarte con informacion sobre licencias de armas, examenes, tramites y mas. En que puedo ayudarte?',
+      text: 'Hola! Soy el asistente virtual de PSILVAMEDIC. Puedo ayudarte con informacion sobre licencias de armas, examenes, tramites y mas. En que puedo ayudarte?',
       sender: 'bot',
       timestamp: new Date()
     }
@@ -117,7 +117,7 @@ export function Chatbot() {
             <div className="flex items-center gap-2">
               <MessageCircle className="h-5 w-5" />
               <div>
-                <h3 className="font-semibold text-sm">Asistente ArmaLegal</h3>
+                <h3 className="font-semibold text-sm">Asistente PSILVAMEDIC</h3>
                 <p className="text-xs opacity-90">En linea</p>
               </div>
             </div>

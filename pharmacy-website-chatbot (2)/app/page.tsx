@@ -84,7 +84,7 @@ export default function Page() {
                 </Badge>
                 <h1 className="text-5xl lg:text-6xl font-bold text-balance leading-tight">
                   Bienvenido a{' '}
-                  <span className="text-primary">ArmaLegal</span>
+                  <span className="text-primary">PSILVAMEDIC</span>
                 </h1>
                 <p className="text-xl text-muted-foreground text-pretty leading-relaxed">
                   Somos especialistas en la tramitacion de licencias y permisos de armas. 
@@ -267,7 +267,7 @@ export default function Page() {
                     </div>
                     <div>
                       <h3 className="font-semibold mb-1">Email</h3>
-                      <p className="text-muted-foreground">info@armalegal.com</p>
+                      <p className="text-muted-foreground">info@psilvamedic.com</p>
                     </div>
                   </div>
                   <div className="flex items-start gap-4">
@@ -325,9 +325,9 @@ export default function Page() {
         {/* Footer */}
         <footer className="bg-foreground text-background py-12 px-4">
           <div className="max-w-7xl mx-auto text-center">
-            <h3 className="text-2xl font-bold mb-2">ArmaLegal</h3>
+            <h3 className="text-2xl font-bold mb-2">PSILVAMEDIC</h3>
             <p className="opacity-80 mb-4">Tu licencia de armas, nuestra especialidad</p>
-            <p className="text-sm opacity-60">2026 ArmaLegal. Todos los derechos reservados.</p>
+            <p className="text-sm opacity-60">2026 PSILVAMEDIC. Todos los derechos reservados.</p>
           </div>
         </footer>
 

@@ -54,7 +54,7 @@ export default function LoginPage() {
           </div>
           <h1 className="text-3xl font-bold">Bienvenido de nuevo</h1>
           <p className="text-muted-foreground">
-            Inicia sesion en tu cuenta de ArmaLegal
+            Inicia sesion en tu cuenta de PSILVAMEDIC
           </p>
         </div>
 

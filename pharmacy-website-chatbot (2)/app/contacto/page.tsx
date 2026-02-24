@@ -37,8 +37,8 @@ export default function ContactoPage() {
       icon: Mail,
       title: 'Email',
       details: [
-        'info@armalegal.com',
-        'tramites@armalegal.com'
+        'info@psilvamedic.com',
+        'tramites@psilvamedic.com'
       ]
     },
     {

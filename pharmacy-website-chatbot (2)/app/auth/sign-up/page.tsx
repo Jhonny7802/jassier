@@ -113,7 +113,7 @@ export default function SignUpPage() {
           </div>
           <h1 className="text-3xl font-bold">Crear una cuenta</h1>
           <p className="text-muted-foreground">
-            Registrate en ArmaLegal para gestionar tus tramites
+            Registrate en PSILVAMEDIC para gestionar tus tramites
           </p>
         </div>
 
