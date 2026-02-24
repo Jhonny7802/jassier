@@ -1,53 +1,68 @@
-import { createClient } from '@/lib/supabase/server'
 import { Navbar } from '@/components/navbar'
-import { ProductCard } from '@/components/product-card'
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
-import { Input } from '@/components/ui/input'
-import { Filter, Search } from 'lucide-react'
+import Link from 'next/link'
+import { 
+  FileText, 
+  Shield, 
+  Target, 
+  Scale, 
+  ClipboardCheck,
+  ArrowRight
+} from 'lucide-react'
 
-export const dynamic = 'force-dynamic'
-
-export default async function ProductosPage({
-  searchParams,
-}: {
-  searchParams: Promise<{ categoria?: string; busqueda?: string }>
-}) {
-  const params = await searchParams
-  const supabase = await createClient()
-
-  // Obtener categorías
-  const { data: categorias } = await supabase
-    .from('categories')
-    .select('*')
-    .order('name')
-
-  // Construir query de productos
-  let query = supabase
-    .from('products')
-    .select('*, categories(name)')
-    .eq('stock', true)
-    .order('name')
-
-  // Filtrar por categoría si existe
-  if (params.categoria) {
-    const { data: categoria } = await supabase
-      .from('categories')
-      .select('id')
-      .eq('slug', params.categoria)
-      .single()
-    
-    if (categoria) {
-      query = query.eq('category_id', categoria.id)
+export default function ProductosPage() {
+  const licenses = [
+    {
+      icon: FileText,
+      title: 'Licencia Tipo B',
+      subtitle: 'Armas Cortas - Defensa Personal',
+      description: 'Para la tenencia de armas cortas con fines de defensa personal. Requiere justificacion y aprobacion de la autoridad competente.',
+      features: ['Examen medico', 'Examen psicologico', 'Justificacion de necesidad', 'Prueba de tiro'],
+      badge: 'Mas solicitada'
+    },
+    {
+      icon: Target,
+      title: 'Licencia Tipo D',
+      subtitle: 'Armas Largas Rayadas - Caza Mayor',
+      description: 'Licencia para armas largas rayadas destinadas a la practica de caza mayor en todo el territorio nacional.',
+      features: ['Examen medico', 'Examen psicologico', 'Licencia de caza', 'Seguro obligatorio'],
+      badge: null
+    },
+    {
+      icon: Shield,
+      title: 'Licencia Tipo E',
+      subtitle: 'Armas de Fuego - Uso Deportivo',
+      description: 'Para tiradores deportivos federados. Permite la tenencia de armas para practica deportiva en galerias autorizadas.',
+      features: ['Examen medico', 'Ficha federativa', 'Inscripcion en club', 'Certificado de aptitud'],
+      badge: 'Deportivo'
+    },
+    {
+      icon: Scale,
+      title: 'Licencia Tipo C',
+      subtitle: 'Armas Largas Lisas - Caza Menor',
+      description: 'Licencia para escopetas y armas largas de anima lisa. La mas comun para actividades de caza menor.',
+      features: ['Examen medico', 'Examen psicologico', 'Licencia de caza', 'Seguro de cazador'],
+      badge: null
+    },
+    {
+      icon: ClipboardCheck,
+      title: 'Renovacion de Licencia',
+      subtitle: 'Todas las Categorias',
+      description: 'Servicio de renovacion para cualquier tipo de licencia de armas antes de su vencimiento. Gestion integral del proceso.',
+      features: ['Examen medico actualizado', 'Examen psicologico', 'Revision de documentacion', 'Entrega en plazo'],
+      badge: 'Renovacion'
+    },
+    {
+      icon: FileText,
+      title: 'Guia de Pertenencia',
+      subtitle: 'Alta y Traslado de Armas',
+      description: 'Tramitacion de guias de pertenencia para el alta, baja o traslado de armas de fuego legalmente adquiridas.',
+      features: ['Documentacion del arma', 'Verificacion de origen', 'Registro en Intervencion', 'Certificado final'],
+      badge: null
     }
-  }
-
-  // Buscar si existe término de búsqueda
-  if (params.busqueda) {
-    query = query.ilike('name', `%${params.busqueda}%`)
-  }
-
-  const { data: productos } = await query
+  ]
 
   return (
     <>
@@ -58,92 +73,65 @@ export default async function ProductosPage({
           <div className="max-w-7xl mx-auto">
             <div className="max-w-2xl">
               <Badge className="mb-4 bg-primary/10 text-primary hover:bg-primary/20 border-primary/20">
-                Catálogo completo
+                Catalogo de tramites
               </Badge>
               <h1 className="text-4xl lg:text-5xl font-bold mb-4 text-balance">
-                Encuentra todo lo que necesitas
+                Licencias y Tramites
               </h1>
               <p className="text-lg text-muted-foreground text-pretty">
-                Explora nuestro catálogo completo de productos farmacéuticos y de salud
+                Consulta todos los tipos de licencias de armas y tramites que gestionamos
               </p>
             </div>
           </div>
         </section>
 
-        {/* Filters & Search */}
-        <section className="sticky top-16 z-40 bg-background/95 backdrop-blur border-b py-4 px-4">
-          <div className="max-w-7xl mx-auto">
-            <div className="flex flex-col sm:flex-row gap-4">
-              {/* Search */}
-              <form action="/productos" method="get" className="flex-1">
-                <div className="relative">
-                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                  <Input
-                    name="busqueda"
-                    type="search"
-                    placeholder="Buscar productos..."
-                    className="pl-9"
-                    defaultValue={params.busqueda}
-                  />
-                </div>
-              </form>
-
-              {/* Category Filter */}
-              <div className="flex gap-2 overflow-x-auto pb-2 sm:pb-0">
-                <Button
-                  variant={!params.categoria ? 'default' : 'outline'}
-                  size="sm"
-                  asChild
-                >
-                  <a href="/productos">Todos</a>
-                </Button>
-                {categorias?.map((categoria) => (
-                  <Button
-                    key={categoria.id}
-                    variant={params.categoria === categoria.slug ? 'default' : 'outline'}
-                    size="sm"
-                    asChild
-                  >
-                    <a href={`/productos?categoria=${categoria.slug}`}>
-                      {categoria.name}
-                    </a>
-                  </Button>
-                ))}
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Products Grid */}
+        {/* Licenses Grid */}
         <section className="py-12 px-4">
           <div className="max-w-7xl mx-auto">
-            {productos && productos.length > 0 ? (
-              <>
-                <div className="mb-6">
-                  <p className="text-sm text-muted-foreground">
-                    Mostrando {productos.length} {productos.length === 1 ? 'producto' : 'productos'}
-                  </p>
-                </div>
-                <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                  {productos.map((producto) => (
-                    <ProductCard key={producto.id} product={producto} />
-                  ))}
-                </div>
-              </>
-            ) : (
-              <div className="text-center py-20">
-                <div className="inline-flex h-20 w-20 rounded-full bg-muted items-center justify-center mb-4">
-                  <Filter className="h-10 w-10 text-muted-foreground" />
-                </div>
-                <h3 className="text-xl font-semibold mb-2">No se encontraron productos</h3>
-                <p className="text-muted-foreground mb-6">
-                  Intenta cambiar los filtros o la búsqueda
-                </p>
-                <Button asChild>
-                  <a href="/productos">Ver todos los productos</a>
-                </Button>
-              </div>
-            )}
+            <div className="mb-6">
+              <p className="text-sm text-muted-foreground">
+                Mostrando {licenses.length} tipos de tramites disponibles
+              </p>
+            </div>
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {licenses.map((license, index) => (
+                <Card key={index} className="group hover:shadow-lg transition-shadow flex flex-col">
+                  <CardHeader>
+                    <div className="flex items-start justify-between mb-2">
+                      <div className="h-12 w-12 rounded-xl bg-primary/10 flex items-center justify-center">
+                        <license.icon className="h-6 w-6 text-primary" />
+                      </div>
+                      {license.badge && (
+                        <Badge variant="secondary" className="text-xs">
+                          {license.badge}
+                        </Badge>
+                      )}
+                    </div>
+                    <CardTitle className="text-xl">{license.title}</CardTitle>
+                    <p className="text-sm font-medium text-accent">{license.subtitle}</p>
+                    <CardDescription className="text-sm">
+                      {license.description}
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent className="flex-1 flex flex-col">
+                    <ul className="space-y-1.5 mb-6 flex-1">
+                      {license.features.map((feature, idx) => (
+                        <li key={idx} className="flex items-center gap-2 text-sm text-muted-foreground">
+                          <div className="h-1.5 w-1.5 rounded-full bg-primary flex-shrink-0" />
+                          {feature}
+                        </li>
+                      ))}
+                    </ul>
+                    <Link href="/contacto">
+                      <Button className="w-full group-hover:bg-primary group-hover:text-primary-foreground transition-colors" variant="outline">
+                        Solicitar Informacion
+                        <ArrowRight className="ml-2 h-4 w-4" />
+                      </Button>
+                    </Link>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
           </div>
         </section>
       </main>

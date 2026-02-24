@@ -5,16 +5,14 @@ import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import {
-  ShoppingCart,
   User,
   Menu,
   X,
-  Pill,
+  Shield,
   LogOut,
-  Package,
-  Heart
+  FileText,
+  ClipboardCheck
 } from 'lucide-react'
-import { createClient } from '@/lib/supabase/client'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -26,47 +24,44 @@ import {
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
   const [user, setUser] = useState<any>(null)
-  const [cartCount, setCartCount] = useState(0)
-  const supabase = createClient()
 
   useEffect(() => {
-    const getUser = async () => {
+    // Only attempt auth if Supabase env vars are available
+    if (
+      !process.env.NEXT_PUBLIC_SUPABASE_URL ||
+      !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+    ) {
+      return
+    }
+
+    const initAuth = async () => {
+      const { createClient } = await import('@/lib/supabase/client')
+      const supabase = createClient()
       const { data: { user } } = await supabase.auth.getUser()
       setUser(user)
-      
-      if (user) {
-        // Get cart count
-        const { data: cartItems } = await supabase
-          .from('cart_items')
-          .select('quantity')
-          .eq('user_id', user.id)
-        
-        if (cartItems) {
-          const total = cartItems.reduce((sum, item) => sum + item.quantity, 0)
-          setCartCount(total)
-        }
+
+      const { data: authListener } = supabase.auth.onAuthStateChange((_event, session) => {
+        setUser(session?.user || null)
+      })
+
+      return () => {
+        authListener.subscription.unsubscribe()
       }
     }
 
-    getUser()
-
-    const { data: authListener } = supabase.auth.onAuthStateChange((event, session) => {
-      setUser(session?.user || null)
-    })
-
-    return () => {
-      authListener.subscription.unsubscribe()
-    }
+    initAuth()
   }, [])
 
   const handleSignOut = async () => {
+    const { createClient } = await import('@/lib/supabase/client')
+    const supabase = createClient()
     await supabase.auth.signOut()
     window.location.href = '/'
   }
 
   const navLinks = [
     { href: '/', label: 'Inicio' },
-    { href: '/productos', label: 'Productos' },
+    { href: '/productos', label: 'Tramites' },
     { href: '/servicios', label: 'Servicios' },
     { href: '/contacto', label: 'Contacto' },
   ]
@@ -78,9 +73,9 @@ export function Navbar() {
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2 font-bold text-xl">
             <div className="h-10 w-10 rounded-lg bg-primary/10 flex items-center justify-center">
-              <Pill className="h-6 w-6 text-primary" />
+              <Shield className="h-6 w-6 text-primary" />
             </div>
-            <span className="hidden sm:inline">FarmaVida</span>
+            <span className="hidden sm:inline">ArmaLegal</span>
           </Link>
 
           {/* Desktop Navigation */}
@@ -99,55 +94,42 @@ export function Navbar() {
           {/* Actions */}
           <div className="flex items-center gap-3">
             {user ? (
-              <>
-                <Link href="/carrito">
-                  <Button variant="ghost" size="icon" className="relative">
-                    <ShoppingCart className="h-5 w-5" />
-                    {cartCount > 0 && (
-                      <Badge className="absolute -top-1 -right-1 h-5 w-5 flex items-center justify-center p-0 text-xs">
-                        {cartCount}
-                      </Badge>
-                    )}
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="ghost" size="icon">
+                    <User className="h-5 w-5" />
                   </Button>
-                </Link>
-
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Button variant="ghost" size="icon">
-                      <User className="h-5 w-5" />
-                    </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent align="end" className="w-48">
-                    <DropdownMenuItem asChild>
-                      <Link href="/perfil" className="cursor-pointer">
-                        <User className="mr-2 h-4 w-4" />
-                        Mi Perfil
-                      </Link>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem asChild>
-                      <Link href="/pedidos" className="cursor-pointer">
-                        <Package className="mr-2 h-4 w-4" />
-                        Mis Pedidos
-                      </Link>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem asChild>
-                      <Link href="/favoritos" className="cursor-pointer">
-                        <Heart className="mr-2 h-4 w-4" />
-                        Favoritos
-                      </Link>
-                    </DropdownMenuItem>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuItem onClick={handleSignOut} className="cursor-pointer">
-                      <LogOut className="mr-2 h-4 w-4" />
-                      Cerrar Sesión
-                    </DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              </>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="w-48">
+                  <DropdownMenuItem asChild>
+                    <Link href="/perfil" className="cursor-pointer">
+                      <User className="mr-2 h-4 w-4" />
+                      Mi Perfil
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild>
+                    <Link href="/pedidos" className="cursor-pointer">
+                      <FileText className="mr-2 h-4 w-4" />
+                      Mis Tramites
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild>
+                    <Link href="/favoritos" className="cursor-pointer">
+                      <ClipboardCheck className="mr-2 h-4 w-4" />
+                      Seguimiento
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem onClick={handleSignOut} className="cursor-pointer">
+                    <LogOut className="mr-2 h-4 w-4" />
+                    Cerrar Sesion
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
             ) : (
               <>
                 <Link href="/auth/login" className="hidden sm:block">
-                  <Button variant="ghost">Iniciar Sesión</Button>
+                  <Button variant="ghost">Iniciar Sesion</Button>
                 </Link>
                 <Link href="/auth/sign-up">
                   <Button>Registrarse</Button>
@@ -186,7 +168,7 @@ export function Navbar() {
                 className="block sm:hidden px-4 py-2 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted rounded-md transition-colors"
                 onClick={() => setIsOpen(false)}
               >
-                Iniciar Sesión
+                Iniciar Sesion
               </Link>
             )}
           </div>

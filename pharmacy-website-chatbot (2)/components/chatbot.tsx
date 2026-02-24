@@ -21,7 +21,7 @@ export function Chatbot() {
   const [messages, setMessages] = useState<Message[]>([
     {
       id: '1',
-      text: '¡Hola! Soy tu asistente virtual de FarmaVida. ¿En qué puedo ayudarte hoy?',
+      text: 'Hola! Soy el asistente virtual de ArmaLegal. Puedo ayudarte con informacion sobre licencias de armas, examenes, tramites y mas. En que puedo ayudarte?',
       sender: 'bot',
       timestamp: new Date()
     }
@@ -30,7 +30,6 @@ export function Chatbot() {
   const [isLoading, setIsLoading] = useState(false)
   const scrollAreaRef = useRef<HTMLDivElement>(null)
 
-  // URL del webhook de n8n - el usuario debe reemplazar esto con su webhook real
   const N8N_WEBHOOK_URL = process.env.NEXT_PUBLIC_N8N_WEBHOOK_URL || 'https://your-n8n-instance.com/webhook/chat'
 
   useEffect(() => {
@@ -55,7 +54,6 @@ export function Chatbot() {
     setIsLoading(true)
 
     try {
-      // Enviar mensaje al webhook de n8n
       const response = await fetch(N8N_WEBHOOK_URL, {
         method: 'POST',
         headers: {
@@ -64,17 +62,16 @@ export function Chatbot() {
         body: JSON.stringify({
           message: inputMessage,
           timestamp: new Date().toISOString(),
-          sessionId: `session-${Date.now()}` // Puedes implementar sesiones persistentes
+          sessionId: `session-${Date.now()}`
         })
       })
 
       if (response.ok) {
         const data = await response.json()
         
-        // La respuesta de n8n debe tener un campo "reply" o similar
         const botMessage: Message = {
           id: (Date.now() + 1).toString(),
-          text: data.reply || data.message || 'Gracias por tu mensaje. Un farmacéutico te responderá pronto.',
+          text: data.reply || data.message || 'Gracias por tu mensaje. Un asesor te contactara pronto para ayudarte con tu tramite.',
           sender: 'bot',
           timestamp: new Date()
         }
@@ -86,10 +83,9 @@ export function Chatbot() {
     } catch (error) {
       console.error('Error al enviar mensaje:', error)
       
-      // Mensaje de respaldo si falla la conexión con n8n
       const errorMessage: Message = {
         id: (Date.now() + 1).toString(),
-        text: 'Lo siento, estoy teniendo problemas de conexión. Por favor, intenta nuevamente o contacta con nosotros directamente.',
+        text: 'Lo siento, estoy teniendo problemas de conexion. Por favor, intenta nuevamente o contactanos directamente por telefono.',
         sender: 'bot',
         timestamp: new Date()
       }
@@ -102,7 +98,7 @@ export function Chatbot() {
 
   return (
     <>
-      {/* Botón flotante */}
+      {/* Floating button */}
       {!isOpen && (
         <Button
           onClick={() => setIsOpen(true)}
@@ -113,7 +109,7 @@ export function Chatbot() {
         </Button>
       )}
 
-      {/* Ventana del chat */}
+      {/* Chat window */}
       {isOpen && (
         <Card className="fixed bottom-6 right-6 w-[380px] h-[500px] shadow-2xl z-50 flex flex-col overflow-hidden">
           {/* Header */}
@@ -121,8 +117,8 @@ export function Chatbot() {
             <div className="flex items-center gap-2">
               <MessageCircle className="h-5 w-5" />
               <div>
-                <h3 className="font-semibold text-sm">Asistente FarmaVida</h3>
-                <p className="text-xs opacity-90">En línea</p>
+                <h3 className="font-semibold text-sm">Asistente ArmaLegal</h3>
+                <p className="text-xs opacity-90">En linea</p>
               </div>
             </div>
             <Button
@@ -135,7 +131,7 @@ export function Chatbot() {
             </Button>
           </div>
 
-          {/* Mensajes */}
+          {/* Messages */}
           <ScrollArea className="flex-1 p-4" ref={scrollAreaRef}>
             <div className="space-y-4">
               {messages.map((message) => (
@@ -180,7 +176,7 @@ export function Chatbot() {
               <Input
                 value={inputMessage}
                 onChange={(e) => setInputMessage(e.target.value)}
-                placeholder="Escribe tu mensaje..."
+                placeholder="Escribe tu consulta..."
                 className="flex-1"
                 disabled={isLoading}
               />

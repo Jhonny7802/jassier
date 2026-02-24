@@ -10,7 +10,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Alert, AlertDescription } from '@/components/ui/alert'
-import { Pill, AlertCircle, Loader2, CheckCircle2 } from 'lucide-react'
+import { Shield, AlertCircle, Loader2, CheckCircle2 } from 'lucide-react'
 import { createClient } from '@/lib/supabase/client'
 
 export default function SignUpPage() {
@@ -109,11 +109,11 @@ export default function SignUpPage() {
       <div className="w-full max-w-md space-y-6">
         <div className="text-center space-y-2">
           <div className="inline-flex h-16 w-16 rounded-2xl bg-primary/10 items-center justify-center mb-4">
-            <Pill className="h-8 w-8 text-primary" />
+            <Shield className="h-8 w-8 text-primary" />
           </div>
           <h1 className="text-3xl font-bold">Crear una cuenta</h1>
           <p className="text-muted-foreground">
-            Únete a FarmaVida y comienza a cuidar tu salud
+            Registrate en ArmaLegal para gestionar tus tramites
           </p>
         </div>
 

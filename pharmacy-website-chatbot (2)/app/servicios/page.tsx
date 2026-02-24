@@ -4,97 +4,97 @@ import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import {
   Clock,
-  Truck,
   Award,
-  Stethoscope,
   Phone,
-  Pill,
-  Heart,
   Shield,
-  Home,
-  Calendar,
   FileText,
-  Users
+  Users,
+  Scale,
+  Target,
+  ClipboardCheck,
+  Briefcase,
+  BookOpen,
+  CheckCircle
 } from 'lucide-react'
 
 export default function ServiciosPage() {
   const mainServices = [
     {
-      icon: Clock,
-      title: 'Atención 24/7',
-      description: 'Estamos disponibles para ti en cualquier momento del día',
+      icon: FileText,
+      title: 'Tramitacion de Licencias',
+      description: 'Gestion completa de licencias de armas tipo A, B, C, D y E',
       features: [
-        'Farmacia de guardia',
-        'Atención telefónica continua',
-        'Pedidos urgentes',
-        'Consultas en línea'
+        'Licencia tipo A - Armas de guerra (profesional)',
+        'Licencia tipo B - Armas cortas (defensa personal)',
+        'Licencia tipo D - Armas largas rayadas (caza mayor)',
+        'Licencia tipo E - Armas de fuego (uso deportivo)'
       ]
     },
     {
-      icon: Truck,
-      title: 'Entrega a Domicilio',
-      description: 'Recibe tus medicamentos en la puerta de tu casa',
+      icon: ClipboardCheck,
+      title: 'Examenes Medicos y Psicologicos',
+      description: 'Reconocimientos obligatorios realizados por profesionales autorizados',
       features: [
-        'Entrega en 24h',
-        'Envío gratis +€50',
-        'Seguimiento en tiempo real',
-        'Horarios flexibles'
+        'Examen medico general completo',
+        'Evaluacion psicologica y aptitudinal',
+        'Test psicotecnico oficial',
+        'Certificados con validez legal'
       ]
     },
     {
-      icon: Stethoscope,
-      title: 'Consulta Farmacéutica',
-      description: 'Asesoramiento profesional personalizado',
+      icon: Target,
+      title: 'Cursos de Formacion',
+      description: 'Capacitacion homologada en manejo seguro de armas',
       features: [
-        'Consultas gratuitas',
-        'Farmacéuticos certificados',
-        'Seguimiento de tratamientos',
-        'Recomendaciones personalizadas'
+        'Normativa vigente sobre armas',
+        'Manejo y conservacion segura',
+        'Practica en galeria de tiro',
+        'Preparacion para examen teorico'
       ]
     },
     {
-      icon: Award,
-      title: 'Calidad Garantizada',
-      description: 'Productos certificados y de máxima calidad',
+      icon: Scale,
+      title: 'Asesoria Legal',
+      description: 'Consultas juridicas especializadas en legislacion de armas',
       features: [
-        'Certificación ISO',
-        'Proveedores verificados',
-        'Control de calidad',
-        'Garantía de satisfacción'
+        'Interpretacion de normativa',
+        'Recursos y reclamaciones',
+        'Renovaciones de licencia',
+        'Herencias y traspasos de armas'
       ]
     }
   ]
 
   const additionalServices = [
     {
-      icon: Heart,
-      title: 'Control de Salud',
-      description: 'Medición de presión arterial, glucosa y más'
-    },
-    {
       icon: Shield,
-      title: 'Servicio de Vacunación',
-      description: 'Vacunas con cita previa y personal especializado'
+      title: 'Guia de Pertenencia',
+      description: 'Tramitacion de guias para tenencia legal de armas'
     },
     {
-      icon: Home,
-      title: 'Atención Domiciliaria',
-      description: 'Servicio especializado para personas con movilidad reducida'
+      icon: BookOpen,
+      title: 'Renovacion de Permisos',
+      description: 'Gestion de renovaciones antes del vencimiento'
     },
     {
-      icon: Calendar,
-      title: 'Recordatorios',
-      description: 'Sistema de alertas para tomar tus medicamentos'
+      icon: Briefcase,
+      title: 'Licencia Federativa',
+      description: 'Tramites para tiradores deportivos federados'
     },
     {
-      icon: FileText,
-      title: 'Gestión de Recetas',
-      description: 'Digitalización y renovación de recetas médicas'
+      icon: CheckCircle,
+      title: 'Revision de Documentacion',
+      description: 'Verificacion previa de expedientes y solicitudes'
     },
     {
       icon: Users,
-      title: 'Programas de Fidelidad',
-      description: 'Acumula puntos y obtén descuentos exclusivos'
+      title: 'Atencion Empresarial',
+      description: 'Servicios especializados para empresas de seguridad'
+    },
+    {
+      icon: Clock,
+      title: 'Tramite Urgente',
+      description: 'Gestion prioritaria con seguimiento personalizado'
     }
   ]
 
@@ -112,8 +112,8 @@ export default function ServiciosPage() {
               Nuestros Servicios
             </h1>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto text-pretty">
-              Ofrecemos una amplia gama de servicios farmacéuticos profesionales 
-              para cuidar de tu salud y bienestar
+              Ofrecemos una gama completa de servicios para la tramitacion 
+              de licencias y permisos de armas
             </p>
           </div>
         </section>
@@ -155,7 +155,7 @@ export default function ServiciosPage() {
             <div className="text-center mb-12">
               <h2 className="text-3xl font-bold mb-4">Servicios Adicionales</h2>
               <p className="text-muted-foreground text-lg">
-                Más formas de cuidar tu salud
+                Mas soluciones para tus necesidades
               </p>
             </div>
 
@@ -185,10 +185,10 @@ export default function ServiciosPage() {
                 </div>
                 <div>
                   <h2 className="text-3xl font-bold mb-2">
-                    ¿Necesitas más información?
+                    Necesitas mas informacion?
                   </h2>
                   <p className="text-lg opacity-90">
-                    Nuestro equipo está disponible para ayudarte con cualquier consulta
+                    Nuestro equipo de profesionales esta disponible para resolver todas tus dudas
                   </p>
                 </div>
                 <div className="flex flex-wrap items-center justify-center gap-4">

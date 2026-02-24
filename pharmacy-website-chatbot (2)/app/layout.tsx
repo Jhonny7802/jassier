@@ -8,8 +8,8 @@ const _geist = Geist({ subsets: ['latin'] })
 const _geistMono = Geist_Mono({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'FarmaVida - Tu Farmacia de Confianza',
-  description: 'Farmacia online con atención personalizada. Productos de salud, medicamentos y asesoramiento farmacéutico profesional.',
+  title: 'ArmaLegal - Licencias y Permisos de Armas',
+  description: 'Empresa especializada en tramites de licencias de armas. Examenes medicos, psicologicos, cursos de formacion y asesoria legal para obtener tu permiso de armas.',
   generator: 'v0.app',
 }
 

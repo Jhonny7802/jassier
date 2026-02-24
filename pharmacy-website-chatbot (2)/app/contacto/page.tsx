@@ -18,16 +18,16 @@ export default function ContactoPage() {
   const contactInfo = [
     {
       icon: MapPin,
-      title: 'Dirección',
+      title: 'Direccion',
       details: [
         'Calle Principal #123',
         'Centro, Ciudad 28001',
-        'España'
+        'Espana'
       ]
     },
     {
       icon: Phone,
-      title: 'Teléfono',
+      title: 'Telefono',
       details: [
         '+34 123 456 789',
         '+34 987 654 321 (Urgencias)'
@@ -37,17 +37,17 @@ export default function ContactoPage() {
       icon: Mail,
       title: 'Email',
       details: [
-        'info@farmavida.com',
-        'soporte@farmavida.com'
+        'info@armalegal.com',
+        'tramites@armalegal.com'
       ]
     },
     {
       icon: Clock,
       title: 'Horario',
       details: [
-        'Lunes a Viernes: 8:00 - 22:00',
-        'Sábados: 9:00 - 21:00',
-        'Domingos: 10:00 - 20:00'
+        'Lunes a Viernes: 9:00 - 19:00',
+        'Sabado: 10:00 - 14:00',
+        'Domingo: Cerrado'
       ]
     }
   ]
@@ -60,14 +60,14 @@ export default function ContactoPage() {
         <section className="bg-gradient-to-br from-primary/10 via-background to-accent/10 py-16 px-4 border-b">
           <div className="max-w-7xl mx-auto text-center">
             <Badge className="mb-4 bg-primary/10 text-primary hover:bg-primary/20 border-primary/20">
-              Estamos aquí para ayudarte
+              Estamos aqui para ayudarte
             </Badge>
             <h1 className="text-4xl lg:text-5xl font-bold mb-4 text-balance">
-              Contáctanos
+              Contactanos
             </h1>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto text-pretty">
-              ¿Tienes alguna pregunta o necesitas ayuda? Nuestro equipo está disponible 
-              para atenderte
+              Tienes alguna pregunta sobre licencias de armas o necesitas ayuda con tu tramite? 
+              Nuestro equipo esta disponible para atenderte
             </p>
           </div>
         </section>
@@ -142,7 +142,7 @@ export default function ContactoPage() {
                     </div>
 
                     <div className="space-y-2">
-                      <Label htmlFor="telefono">Teléfono</Label>
+                      <Label htmlFor="telefono">Telefono</Label>
                       <Input
                         id="telefono"
                         type="tel"
@@ -155,7 +155,7 @@ export default function ContactoPage() {
                       <Input
                         id="asunto"
                         type="text"
-                        placeholder="¿En qué podemos ayudarte?"
+                        placeholder="Tipo de licencia o tramite"
                         required
                       />
                     </div>
@@ -164,7 +164,7 @@ export default function ContactoPage() {
                       <Label htmlFor="mensaje">Mensaje</Label>
                       <Textarea
                         id="mensaje"
-                        placeholder="Escribe tu mensaje aquí..."
+                        placeholder="Describe tu consulta aqui..."
                         rows={5}
                         required
                       />
@@ -182,9 +182,9 @@ export default function ContactoPage() {
               <div className="space-y-6">
                 <Card>
                   <CardHeader>
-                    <CardTitle>Nuestra Ubicación</CardTitle>
+                    <CardTitle>Nuestra Ubicacion</CardTitle>
                     <CardDescription>
-                      Encuéntranos en el centro de la ciudad
+                      Encuentranos en el centro de la ciudad
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
@@ -193,8 +193,8 @@ export default function ContactoPage() {
                     </div>
                     <div className="mt-4 space-y-2">
                       <p className="text-sm text-muted-foreground">
-                        Estamos ubicados en una zona de fácil acceso con estacionamiento 
-                        disponible y buenas conexiones de transporte público.
+                        Estamos ubicados en una zona de facil acceso con estacionamiento 
+                        disponible y buenas conexiones de transporte publico.
                       </p>
                     </div>
                   </CardContent>
@@ -202,10 +202,10 @@ export default function ContactoPage() {
 
                 <Card className="bg-primary text-primary-foreground">
                   <CardContent className="pt-6">
-                    <h3 className="text-xl font-bold mb-2">¿Necesitas ayuda urgente?</h3>
+                    <h3 className="text-xl font-bold mb-2">Necesitas ayuda urgente?</h3>
                     <p className="text-sm opacity-90 mb-4">
-                      Nuestro equipo de atención al cliente está disponible 24/7 
-                      para atender emergencias
+                      Nuestro equipo esta disponible para resolver consultas urgentes 
+                      sobre tramites y plazos de licencias
                     </p>
                     <Button variant="secondary" className="w-full" size="lg">
                       <Phone className="mr-2 h-4 w-4" />
@@ -219,16 +219,16 @@ export default function ContactoPage() {
                     <h3 className="font-semibold mb-3">Preguntas Frecuentes</h3>
                     <div className="space-y-3 text-sm">
                       <div>
-                        <p className="font-medium text-foreground">¿Hacen entregas a domicilio?</p>
-                        <p className="text-muted-foreground">Sí, entregamos en 24h con envío gratis en pedidos +€50</p>
+                        <p className="font-medium text-foreground">Que requisitos necesito para obtener una licencia?</p>
+                        <p className="text-muted-foreground">Ser mayor de edad, no tener antecedentes penales y aprobar los examenes medico y psicologico</p>
                       </div>
                       <div>
-                        <p className="font-medium text-foreground">¿Necesito receta médica?</p>
-                        <p className="text-muted-foreground">Solo para medicamentos específicos marcados en el catálogo</p>
+                        <p className="font-medium text-foreground">Cuanto tarda el tramite completo?</p>
+                        <p className="text-muted-foreground">El proceso completo suele durar entre 2 y 4 semanas, dependiendo del tipo de licencia</p>
                       </div>
                       <div>
-                        <p className="font-medium text-foreground">¿Tienen servicio de urgencias?</p>
-                        <p className="text-muted-foreground">Sí, contamos con farmacia de guardia 24/7</p>
+                        <p className="font-medium text-foreground">Cada cuanto debo renovar mi licencia?</p>
+                        <p className="text-muted-foreground">Las licencias se renuevan cada 5 anos, aunque puede variar segun el tipo</p>
                       </div>
                     </div>
                   </CardContent>
