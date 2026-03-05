@@ -1,141 +1,198 @@
-import { redirect } from 'next/navigation'
-import { createClient } from '@/lib/supabase/server'
 import { Navbar } from '@/components/navbar'
-import { CartItem } from '@/components/cart-item'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { Button } from '@/components/ui/button'
+import { Chatbot } from '@/components/chatbot'
+import { Card, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
-import { ShoppingBag, ArrowRight } from 'lucide-react'
+import { Button } from '@/components/ui/button'
 import Link from 'next/link'
+import {
+  Phone,
+  ClipboardCheck,
+  FileText,
+  Award,
+  CheckCircle2,
+  ArrowRight,
+  AlertCircle,
+} from 'lucide-react'
 
-export const dynamic = 'force-dynamic'
+export default function ProcesoPage() {
+  const steps = [
+    {
+      step: 1,
+      title: 'Consulta Inicial Gratuita',
+      icon: Phone,
+      description: 'Contacta con nosotros para una primera evaluacion de tu caso. Te informamos de todos los requisitos, documentacion necesaria y plazos estimados segun el tipo de licencia que necesites.',
+      details: [
+        'Evaluacion personalizada de tu situacion',
+        'Informacion detallada de requisitos',
+        'Presupuesto sin compromiso',
+        'Planificacion del calendario de tramites',
+      ],
+    },
+    {
+      step: 2,
+      title: 'Examenes Medicos y Psicologicos',
+      icon: ClipboardCheck,
+      description: 'Realizamos en nuestro centro los reconocimientos medicos y psicologicos exigidos por la normativa vigente para la obtencion o renovacion de licencias de armas.',
+      details: [
+        'Examen medico general (vision, audicion, motricidad)',
+        'Evaluacion psicologica completa',
+        'Certificado de aptitud psicofisica oficial',
+        'Validez de 3 meses para la solicitud',
+      ],
+    },
+    {
+      step: 3,
+      title: 'Documentacion y Formacion',
+      icon: FileText,
+      description: 'Preparamos toda la documentacion requerida y te proporcionamos la formacion necesaria. Segun el tipo de licencia, esto puede incluir cursos de manejo seguro y pruebas de aptitud.',
+      details: [
+        'Preparacion de toda la documentacion oficial',
+        'Cursos de formacion en manejo seguro de armas',
+        'Preparacion para pruebas de aptitud',
+        'Fotografia y tramites administrativos',
+      ],
+    },
+    {
+      step: 4,
+      title: 'Solicitud y Obtencion',
+      icon: Award,
+      description: 'Presentamos tu solicitud ante la Intervencion de Armas de la Guardia Civil y te acompanamos hasta la obtencion efectiva de tu licencia o permiso de armas.',
+      details: [
+        'Presentacion de solicitud oficial',
+        'Seguimiento del expediente',
+        'Resolucion de incidencias',
+        'Entrega de tu licencia',
+      ],
+    },
+  ]
 
-export default async function CarritoPage() {
-  const supabase = await createClient()
-
-  const { data: { user } } = await supabase.auth.getUser()
-
-  if (!user) {
-    redirect('/auth/login')
-  }
-
-  const { data: cartItems } = await supabase
-    .from('cart_items')
-    .select(`
-      *,
-      products (
-        id,
-        name,
-        description,
-        price,
-        image_url,
-        requires_prescription
-      )
-    `)
-    .eq('user_id', user.id)
-
-  const subtotal = cartItems?.reduce((sum, item) => {
-    return sum + (item.products?.price || 0) * item.quantity
-  }, 0) || 0
-
-  const envio = subtotal > 50 ? 0 : 5.99
-  const total = subtotal + envio
+  const requirements = [
+    'Ser mayor de edad (18 anos para licencia E, 14 con autorizacion para licencia federativa)',
+    'Nacionalidad espanola o residencia legal en Espana',
+    'No tener antecedentes penales',
+    'Superar el reconocimiento psicofisico',
+    'No haber sido sancionado en materia de armas en los ultimos 3 anos',
+    'Superar las pruebas de capacitacion segun el tipo de licencia',
+  ]
 
   return (
     <>
       <Navbar />
-      <main className="min-h-screen bg-muted/30 py-8 px-4">
-        <div className="max-w-7xl mx-auto">
-          <div className="mb-8">
-            <h1 className="text-3xl font-bold mb-2">Mi Carrito</h1>
-            <p className="text-muted-foreground">
-              {cartItems?.length || 0} {cartItems?.length === 1 ? 'producto' : 'productos'} en tu carrito
-            </p>
+      <main className="min-h-screen">
+        {/* Hero */}
+        <section className="bg-primary py-16 px-4">
+          <div className="max-w-7xl mx-auto relative">
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,hsl(var(--accent)/0.1),transparent_60%)]" />
+            <div className="relative">
+              <Badge className="mb-4 bg-accent/20 text-accent border-accent/30">Proceso de Solicitud</Badge>
+              <h1 className="text-4xl lg:text-5xl font-bold text-primary-foreground mb-4 text-balance">
+                Como Obtener tu Licencia de Armas
+              </h1>
+              <p className="text-lg text-primary-foreground/80 max-w-3xl text-pretty leading-relaxed">
+                Te guiamos paso a paso en todo el proceso, desde la consulta inicial hasta la obtencion de tu permiso.
+              </p>
+            </div>
           </div>
+        </section>
 
-          {cartItems && cartItems.length > 0 ? (
-            <div className="grid lg:grid-cols-3 gap-8">
-              {/* Cart Items */}
-              <div className="lg:col-span-2 space-y-4">
-                {cartItems.map((item) => (
-                  <CartItem key={item.id} item={item} />
-                ))}
-              </div>
+        {/* Timeline Steps */}
+        <section className="py-16 px-4">
+          <div className="max-w-4xl mx-auto space-y-8">
+            {steps.map((step, index) => (
+              <div key={index} className="relative flex gap-6">
+                {/* Left: Step number + connector */}
+                <div className="flex flex-col items-center">
+                  <div className="h-14 w-14 rounded-2xl bg-primary flex items-center justify-center flex-shrink-0">
+                    <span className="text-xl font-bold text-primary-foreground">{step.step}</span>
+                  </div>
+                  {index < steps.length - 1 && (
+                    <div className="w-px flex-1 bg-border mt-4" />
+                  )}
+                </div>
 
-              {/* Order Summary */}
-              <div className="lg:col-span-1">
-                <Card className="sticky top-24">
-                  <CardHeader>
-                    <CardTitle>Resumen del Pedido</CardTitle>
-                  </CardHeader>
-                  <CardContent className="space-y-4">
-                    <div className="space-y-2">
-                      <div className="flex justify-between text-sm">
-                        <span className="text-muted-foreground">Subtotal</span>
-                        <span className="font-medium">€{subtotal.toFixed(2)}</span>
-                      </div>
-                      <div className="flex justify-between text-sm">
-                        <span className="text-muted-foreground">Envío</span>
-                        <span className="font-medium">
-                          {envio === 0 ? (
-                            <Badge variant="secondary" className="text-xs">Gratis</Badge>
-                          ) : (
-                            `€${envio.toFixed(2)}`
-                          )}
-                        </span>
-                      </div>
-                      {subtotal < 50 && (
-                        <p className="text-xs text-muted-foreground">
-                          Envío gratis en pedidos superiores a €50
-                        </p>
-                      )}
+                {/* Right: Content */}
+                <Card className="flex-1 mb-4">
+                  <CardContent className="p-6">
+                    <div className="flex items-center gap-3 mb-3">
+                      <step.icon className="h-6 w-6 text-primary" />
+                      <h3 className="text-xl font-bold">{step.title}</h3>
                     </div>
-
-                    <div className="border-t pt-4">
-                      <div className="flex justify-between items-center mb-4">
-                        <span className="text-lg font-semibold">Total</span>
-                        <span className="text-2xl font-bold text-primary">
-                          €{total.toFixed(2)}
-                        </span>
-                      </div>
-
-                      <Button className="w-full" size="lg">
-                        Proceder al Pago
-                        <ArrowRight className="ml-2 h-4 w-4" />
-                      </Button>
-                    </div>
-
-                    <div className="text-center pt-4 border-t">
-                      <Link
-                        href="/productos"
-                        className="text-sm text-primary hover:underline"
-                      >
-                        Continuar comprando
-                      </Link>
-                    </div>
+                    <p className="text-muted-foreground leading-relaxed mb-4">
+                      {step.description}
+                    </p>
+                    <ul className="space-y-2">
+                      {step.details.map((detail, i) => (
+                        <li key={i} className="flex items-start gap-2 text-sm">
+                          <CheckCircle2 className="h-4 w-4 text-accent flex-shrink-0 mt-0.5" />
+                          <span className="text-muted-foreground">{detail}</span>
+                        </li>
+                      ))}
+                    </ul>
                   </CardContent>
                 </Card>
               </div>
+            ))}
+          </div>
+        </section>
+
+        {/* Requirements */}
+        <section className="py-16 px-4 bg-muted/30">
+          <div className="max-w-4xl mx-auto">
+            <div className="text-center mb-10">
+              <h2 className="text-3xl font-bold mb-4">Requisitos Generales</h2>
+              <p className="text-muted-foreground text-lg text-pretty">
+                Estos son los requisitos basicos comunes a todos los tipos de licencia
+              </p>
             </div>
-          ) : (
-            <Card className="py-20">
-              <CardContent className="text-center">
-                <div className="inline-flex h-20 w-20 rounded-full bg-muted items-center justify-center mb-4">
-                  <ShoppingBag className="h-10 w-10 text-muted-foreground" />
+            <Card>
+              <CardContent className="p-6">
+                <div className="flex items-center gap-3 mb-6 p-3 rounded-lg bg-accent/10 border border-accent/20">
+                  <AlertCircle className="h-5 w-5 text-accent flex-shrink-0" />
+                  <p className="text-sm text-foreground">
+                    Los requisitos pueden variar segun el tipo de licencia. Contactanos para una evaluacion personalizada de tu caso.
+                  </p>
                 </div>
-                <h3 className="text-xl font-semibold mb-2">Tu carrito está vacío</h3>
-                <p className="text-muted-foreground mb-6">
-                  Agrega productos a tu carrito para comenzar tu compra
-                </p>
-                <Button asChild>
-                  <Link href="/productos">
-                    Explorar Productos
-                  </Link>
-                </Button>
+                <ul className="space-y-4">
+                  {requirements.map((req, i) => (
+                    <li key={i} className="flex items-start gap-3">
+                      <CheckCircle2 className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
+                      <span className="text-foreground">{req}</span>
+                    </li>
+                  ))}
+                </ul>
               </CardContent>
             </Card>
-          )}
-        </div>
+          </div>
+        </section>
+
+        {/* CTA */}
+        <section className="py-16 px-4 bg-primary">
+          <div className="max-w-4xl mx-auto text-center space-y-6">
+            <h2 className="text-3xl font-bold text-primary-foreground text-balance">
+              Listo para Empezar?
+            </h2>
+            <p className="text-lg text-primary-foreground/80 text-pretty">
+              Contactanos hoy para tu consulta inicial gratuita y te guiaremos en cada paso del proceso.
+            </p>
+            <Link href="/contacto">
+              <Button size="lg" variant="secondary" className="font-semibold mt-2">
+                Solicitar Consulta Gratuita
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </Button>
+            </Link>
+          </div>
+        </section>
+
+        {/* Footer */}
+        <footer className="bg-foreground text-background py-12 px-4">
+          <div className="max-w-7xl mx-auto text-center">
+            <h3 className="text-2xl font-bold mb-2">PSILVAMEDIC</h3>
+            <p className="opacity-80 mb-4">Tu licencia de armas, nuestra especialidad</p>
+            <p className="text-sm opacity-60">2026 PSILVAMEDIC. Todos los derechos reservados.</p>
+          </div>
+        </footer>
+
+        <Chatbot />
       </main>
     </>
   )

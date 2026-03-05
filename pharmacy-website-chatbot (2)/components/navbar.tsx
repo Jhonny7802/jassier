@@ -61,6 +61,7 @@ export function Navbar() {
 
   const navLinks = [
     { href: '/', label: 'Inicio' },
+    { href: '/catalogo', label: 'Catalogo' },
     { href: '/productos', label: 'Tramites' },
     { href: '/servicios', label: 'Servicios' },
     { href: '/contacto', label: 'Contacto' },
@@ -116,7 +117,7 @@ export function Navbar() {
                   <DropdownMenuItem asChild>
                     <Link href="/favoritos" className="cursor-pointer">
                       <ClipboardCheck className="mr-2 h-4 w-4" />
-                      Seguimiento
+                      Normativa Legal
                     </Link>
                   </DropdownMenuItem>
                   <DropdownMenuSeparator />
