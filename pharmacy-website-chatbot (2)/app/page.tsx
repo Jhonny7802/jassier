@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import { Navbar } from '@/components/navbar'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
@@ -23,6 +24,8 @@ import {
   Star,
   ArrowRight,
   CheckCircle2,
+  Building,
+  BookOpen,
 } from 'lucide-react'
 
 export default function Page() {
@@ -271,16 +274,24 @@ export default function Page() {
               <div className="flex-1 w-full">
                 <div className="grid grid-cols-2 gap-4">
                   {[
-                    { label: 'Pistolas', count: '6 modelos', license: 'Licencia B' },
-                    { label: 'Rifles', count: '5 modelos', license: 'Licencia D' },
-                    { label: 'Escopetas', count: '5 modelos', license: 'Licencia E' },
-                    { label: 'Deportivas', count: '4 modelos', license: 'Federativa' },
+                    { label: 'Pistolas', count: '6 modelos', license: 'Licencia B', image: '/images/pistolas.jpg' },
+                    { label: 'Rifles', count: '5 modelos', license: 'Licencia D', image: '/images/rifles.jpg' },
+                    { label: 'Escopetas', count: '5 modelos', license: 'Licencia E', image: '/images/escopetas.jpg' },
+                    { label: 'Deportivas', count: '4 modelos', license: 'Federativa', image: '/images/deportivas.jpg' },
                   ].map((cat, i) => (
-                    <div key={i} className="p-5 rounded-xl bg-primary-foreground/5 border border-primary-foreground/10 backdrop-blur">
-                      <p className="text-sm text-primary-foreground/60 mb-1">{cat.license}</p>
-                      <h4 className="text-xl font-bold text-primary-foreground">{cat.label}</h4>
-                      <p className="text-sm text-accent font-medium mt-1">{cat.count}</p>
-                    </div>
+                    <Link href="/catalogo" key={i} className="group">
+                      <div className="relative rounded-xl overflow-hidden border border-primary-foreground/10">
+                        <div className="aspect-[4/3] relative">
+                          <Image src={cat.image} alt={cat.label} fill className="object-cover group-hover:scale-105 transition-transform duration-500" />
+                          <div className="absolute inset-0 bg-gradient-to-t from-primary/90 via-primary/40 to-transparent" />
+                        </div>
+                        <div className="absolute bottom-0 left-0 right-0 p-4">
+                          <p className="text-xs text-accent font-medium">{cat.license}</p>
+                          <h4 className="text-lg font-bold text-primary-foreground">{cat.label}</h4>
+                          <p className="text-xs text-primary-foreground/60">{cat.count}</p>
+                        </div>
+                      </div>
+                    </Link>
                   ))}
                 </div>
               </div>
@@ -318,6 +329,80 @@ export default function Page() {
                     </div>
                   </CardContent>
                 </Card>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Galeria de Tiro Banner */}
+        <section className="py-20 px-4 bg-muted/30">
+          <div className="max-w-7xl mx-auto">
+            <div className="grid lg:grid-cols-2 gap-8 items-center">
+              <div className="relative aspect-[16/10] rounded-2xl overflow-hidden">
+                <Image
+                  src="/images/galeria-tiro.jpg"
+                  alt="Galeria de tiro interior de PSILVAMEDIC"
+                  fill
+                  className="object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-r from-primary/30 to-transparent" />
+              </div>
+              <div className="space-y-6">
+                <Badge>Instalaciones</Badge>
+                <h2 className="text-3xl lg:text-4xl font-bold text-balance">
+                  Galeria de Tiro Interior
+                </h2>
+                <p className="text-muted-foreground text-lg text-pretty leading-relaxed">
+                  Practica en nuestra galeria homologada con 6 puestos de tiro, sistema de ventilacion
+                  HEPA e insonorizacion completa. Ideal para practicar con tu arma en un entorno
+                  seguro y controlado.
+                </p>
+                <ul className="space-y-2">
+                  {[
+                    '6 puestos individuales hasta 25 metros',
+                    'Ventilacion HEPA y seguridad integral',
+                    'Supervision profesional permanente',
+                    'Bonos desde 20 EUR por sesion',
+                  ].map((item, i) => (
+                    <li key={i} className="flex items-center gap-3">
+                      <CheckCircle2 className="h-5 w-5 text-accent flex-shrink-0" />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+                <Link href="/galeria-tiro">
+                  <Button size="lg" className="font-semibold">
+                    Conocer la Galeria
+                    <ArrowRight className="ml-2 h-4 w-4" />
+                  </Button>
+                </Link>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Trust & Partners */}
+        <section className="py-16 px-4 border-y">
+          <div className="max-w-7xl mx-auto">
+            <div className="text-center mb-10">
+              <p className="text-sm font-medium text-muted-foreground uppercase tracking-wider">Certificaciones y Colaboradores</p>
+            </div>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+              {[
+                { icon: Shield, label: 'Centro Autorizado', sub: 'Ministerio de Sanidad' },
+                { icon: Award, label: 'ISO 9001:2015', sub: 'Certificacion de Calidad' },
+                { icon: Building, label: 'Registro DGP', sub: 'Direccion General de Policia' },
+                { icon: BookOpen, label: 'Homologacion', sub: 'Centro de Formacion' },
+              ].map((partner, i) => (
+                <div key={i} className="flex flex-col items-center text-center gap-3">
+                  <div className="h-14 w-14 rounded-xl bg-primary/10 flex items-center justify-center">
+                    <partner.icon className="h-7 w-7 text-primary" />
+                  </div>
+                  <div>
+                    <p className="font-semibold text-sm">{partner.label}</p>
+                    <p className="text-xs text-muted-foreground">{partner.sub}</p>
+                  </div>
+                </div>
               ))}
             </div>
           </div>
@@ -454,7 +539,7 @@ export default function Page() {
                 <ul className="space-y-2 text-sm opacity-70">
                   <li><Link href="/servicios" className="hover:opacity-100 transition-opacity">Licencias de Armas</Link></li>
                   <li><Link href="/servicios" className="hover:opacity-100 transition-opacity">Examenes Medicos</Link></li>
-                  <li><Link href="/servicios" className="hover:opacity-100 transition-opacity">Cursos de Formacion</Link></li>
+                  <li><Link href="/galeria-tiro" className="hover:opacity-100 transition-opacity">Galeria de Tiro</Link></li>
                   <li><Link href="/servicios" className="hover:opacity-100 transition-opacity">Asesoria Legal</Link></li>
                 </ul>
               </div>
@@ -463,7 +548,7 @@ export default function Page() {
                 <ul className="space-y-2 text-sm opacity-70">
                   <li><Link href="/" className="hover:opacity-100 transition-opacity">Inicio</Link></li>
                   <li><Link href="/catalogo" className="hover:opacity-100 transition-opacity">Catalogo</Link></li>
-                  <li><Link href="/productos" className="hover:opacity-100 transition-opacity">Tramites</Link></li>
+                  <li><Link href="/nosotros" className="hover:opacity-100 transition-opacity">Nosotros</Link></li>
                   <li><Link href="/contacto" className="hover:opacity-100 transition-opacity">Contacto</Link></li>
                 </ul>
               </div>

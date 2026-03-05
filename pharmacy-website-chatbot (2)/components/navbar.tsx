@@ -62,8 +62,9 @@ export function Navbar() {
   const navLinks = [
     { href: '/', label: 'Inicio' },
     { href: '/catalogo', label: 'Catalogo' },
-    { href: '/productos', label: 'Tramites' },
     { href: '/servicios', label: 'Servicios' },
+    { href: '/galeria-tiro', label: 'Galeria de Tiro' },
+    { href: '/nosotros', label: 'Nosotros' },
     { href: '/contacto', label: 'Contacto' },
   ]
 
@@ -112,6 +113,12 @@ export function Navbar() {
                     <Link href="/pedidos" className="cursor-pointer">
                       <FileText className="mr-2 h-4 w-4" />
                       Mis Tramites
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild>
+                    <Link href="/carrito" className="cursor-pointer">
+                      <ClipboardCheck className="mr-2 h-4 w-4" />
+                      Proceso Solicitud
                     </Link>
                   </DropdownMenuItem>
                   <DropdownMenuItem asChild>
